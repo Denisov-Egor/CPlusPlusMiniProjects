@@ -75,25 +75,6 @@ STL
 
 Проект демонстрирует переход от последовательного кода к **разделению логики программы на отдельные переиспользуемые функции**.
 
-Пример функций:
-
-```cpp
-void printMenu();
-
-double inputAmount();
-
-double calculateCommission(double amount);
-
-bool canWithdraw(double balance, double amount);
-
-double deposit(double balance, double amount);
-
-double withdraw(double balance, double amount);
-
-double transfer(double balance, double amount);
-```
-
----
 
 ## 🔢 Number Analyzer
 
