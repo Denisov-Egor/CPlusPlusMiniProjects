@@ -5,6 +5,7 @@ using namespace std;
 void inputArray(int arr[], int size)
 {
   cout << "Введите эл массива: ";
+  
   for (int i = 0; i < size; i++)
   {
     cin >> arr[i];
@@ -205,28 +206,50 @@ int findSecondMax(int arr[], int size)
 {
   int max = findMax(arr, size);
   int secondMax;
+  bool hasSecondMax = false;
 
   for (int i = 0; i < size; i++)
   {
     if (arr[i] < max)
     {
       secondMax = arr[i];
+      hasSecondMax = true;
       break;
     }
   }
 
+  if (hasSecondMax)
+  {
+    for (int i = 0; i < size; i++)
+    {
+      if (arr[i] < max && arr[i] > secondMax)
+      {
+        secondMax = arr[i];
+      }    
+    }
+
+    return secondMax;
+  }else
+  {
+    cout << "Второго максимума нет." << endl;
+    return 0;
+  }
+}
+
+int countMax(int arr[], int size)
+{
+  int max = findMax(arr, size);
+  int count = 0;
+
   for (int i = 0; i < size; i++)
   {
-    if (arr[i] < max && arr[i] > secondMax)
+    if (arr[i] == max)
     {
-      secondMax = arr[i];
-    }else if (arr[i] == arr[i])
-    {
-      cout << "Второго максимума нет." << endl;
+      count++;
     }
-  }
+  } 
 
-  return secondMax;
+  return count;
 }
 
 void reverseArray(int arr[], int size)
@@ -251,6 +274,28 @@ void printArray(int arr[], int size)
   cout << endl;
 }
 
+void replaceNegatives(int arr[], int size)
+{
+  for (int i = 0; i < size; i++)
+  {
+    if (arr[i] < 0)
+    {
+      arr[i] = 0;
+    }
+  }
+}
+
+int findElement(int arr[], int size, int value)
+{
+  for (int i = 0; i < size; i++)
+  {
+    if (arr[i] == value)
+    {
+      return i;
+    }
+  }
+  return -1;
+}
 int main()
 {
   int size;
@@ -260,15 +305,13 @@ int main()
   {
     cout << "Введите размер массива: ";
     cin >> size;
-  
-    if (size <= 0)
-    {
-      cout << "Ошибка: размер должен быть больше 0." << endl;
-    }else
-    {
-      break;
-    }
-  }
+
+  while (size <= 0)
+  {
+    cout << "Ошибка: размер должен быть больше 0." << endl;
+    cout << "Введите размер еще раз: ";
+    cin >> size;
+  }  
   
   int arr[size];
 
@@ -360,6 +403,38 @@ int main()
         printArray(arr, size);
         break;
 
+      case 16:
+        cout << "Количество максимумов: " << countMax(arr, size) << endl;
+        break;
+
+      case 17:
+      replaceNegatives(arr, size);
+
+      cout << "Отрицательные элементы заменены на 0." << endl;
+      cout << "Измененный массив: ";
+      printArray(arr, size);
+      break;
+
+    case 18:
+    {
+      int value;
+
+      cout << "Введите элемент для поиска: ";
+      cin >> value;
+
+      int index = findElement(arr, size, value);
+
+      if (index == -1)
+      {
+        cout << "Элемент не найден." << endl;
+      }
+      else
+      {
+        cout << "Элемент найден. Индекс: " << index << endl;
+      }
+    break;
+    }
+
       case 0:
         cout << "Программа завершена.\n";
         break;
@@ -371,4 +446,5 @@ int main()
   } while (chose != 0);
 
   return 0;
+  }
 }
