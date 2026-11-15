@@ -2,10 +2,6 @@
 #include <string>
 #include <stdexcept>
 
-void showMainMenu();
-void showAdministratorMenu();
-void showUserMenu();
-
 int inputMovieId()
 {
   int id;
@@ -163,7 +159,123 @@ public:
   }
 };
 
+void showAdministratorMenu(Cinema& cinema)
+{
+  int choice = -1;
+
+  while (choice != 0)
+  {
+    std::cout << "\n"
+              << "========== МЕНЮ АДМИНИСТРАТОРА ==========\n\n"
+              << "1. Добавить фильм\n"
+              << "2. Показать все фильмы\n"
+              << "3. Удалить фильм\n"
+              << "0. Назад\n\n"
+              << "Выберите действие: ";
+
+    std::cin >> choice;
+
+    switch (choice)
+    {
+    case 1:
+      
+      break;
+
+    case 2:
+
+      break;
+
+    case 3:
+
+      break;
+
+    case 0:
+      std::cout << "Назад.\n";
+      break;
+    
+    default:
+      std::cout << "Неверный пункт меню.\n";
+      break;
+    }
+    
+  }
+}
+
+void showUserMenu(Cinema& cinema)
+{
+  int choice = -1;
+
+  while (choice != 0)
+  {
+    std::cout << "\n"
+              << "========== МЕНЮ ПОЛЬЗОВАТЕЛЯ ==========\n\n"
+              << "1. Показать каталог фильмов\n"
+              << "2. Найти фильм по ID\n"
+              << "0. Назад\n\n"
+              << "Выберите действие: ";
+
+    std::cin >> choice;
+
+    switch (choice)
+    {
+    case 1:
+      
+      break;
+    
+    case 2:
+
+      break;
+    
+    case 0:
+      std::cout << "Назад.\n";
+      break;
+    
+    default:
+      std::cout << "Неверный пункт меню.\n";
+      break;
+    }    
+  }
+}
+
+void showMainMenu(Cinema& cinema)
+{
+  int choice = -1;
+
+  while (choice != 0)
+  {
+    std::cout << "\n"
+              << "========== СИСТЕМА БРОНИРОВАНИЯ КИНО ==========\n\n"
+              << "1. Администратор\n"
+              << "2. Пользователь\n"
+              << "0. Выход\n\n"
+              << "Выберите действие: ";
+
+    std::cin >> choice;
+
+    switch (choice)
+    {
+    case 1:
+      showAdministratorMenu(cinema);
+      break;
+
+    case 2:
+      showUserMenu(cinema);
+      break;
+
+    case 0:
+      std::cout << "Выход.\n";
+      return;
+    
+    default:
+      std::cout << "Неверный пункт меню.\n";
+      break;
+    }
+  }
+}
+
 int main()
 {
+  Cinema cinema;
 
+  showMainMenu(cinema);
 }
