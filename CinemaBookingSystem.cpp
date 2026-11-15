@@ -6,6 +6,13 @@ void showMainMenu();
 void showAdministratorMenu();
 void showUserMenu();
 
+int inputMovieId()
+{
+  int id;
+  std::cin >> id;
+  return id;
+}
+
 class Movie
 {
 private:
@@ -66,6 +73,93 @@ public:
               << "Название: " << title << '\n'
               << "Продолжительность: " << duration << " мин.\n"
               << "Возрастной рейтинг: " << ageRating << "+\n";
+  }
+};
+
+class Cinema
+{
+private:
+  Movie* movies;
+  int movieCount;
+  int capacity;
+  
+  void resize()
+  {
+    int newCapacity = capacity * 2;
+    Movie* newMovies = new Movie[newCapacity];
+  
+    for (int i = 0; i < movieCount; i++)
+    {
+      newMovies[i] = movies[i];
+    }
+    
+    delete [] movies;
+  
+    movies = newMovies;
+    capacity = newCapacity;
+  }
+
+public:
+  Cinema()
+        : movies(new Movie[2]), movieCount(0), capacity(2)
+  {}
+
+  ~Cinema()
+  {
+    delete [] movies;
+  }
+
+  Movie* findMovie(int id)
+  {
+    for (int i = 0; i < movieCount; i++)
+    {
+      if (movies[i].getId() == id)
+      {
+        return &movies[i];
+      }
+    }
+    
+    return nullptr;
+  }
+
+  void addMovie(const Movie& movie)
+  {
+    if (findMovie(movie.getId()) != nullptr)
+    {
+      throw std::invalid_argument("Фильм с таким ID уже существует");
+    }
+    
+    if (movieCount == capacity)
+    {
+      resize();
+    }
+    
+    movies[movieCount] = movie;
+    movieCount++;
+  }
+
+  void displayMovies() const
+  {
+    if (movieCount == 0)
+    {
+      std::cout << "Каталог фильмов пуст.\n";
+      return;
+    }
+    
+    for (int i = 0; i < movieCount; i++)
+    {
+      movies[i].display();
+    }
+  }
+
+  int getMovieCount() const
+  {
+    return movieCount;
+  }
+
+  int getCapacity() const
+  {
+    return capacity;
   }
 };
 
