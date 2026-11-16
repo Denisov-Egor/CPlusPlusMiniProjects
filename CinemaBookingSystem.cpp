@@ -159,6 +159,75 @@ public:
   }
 };
 
+void addMovie(Cinema& cinema)
+{
+  int id;
+  std::string title;
+  int duration;
+  int ageRating;
+
+  std::cout << "Введите ID фильма: ";
+  std::cin >> id;
+
+  while (id <= 0 || cinema.findMovie(id) != nullptr)
+  {
+    if (id <= 0)
+    { 
+      std::cout << "Ошибка: ID фильма должен быть больше нуля.\n";
+    }else
+    {
+      std::cout << "Ошибка: фильм с таким ID уже существует.\n";
+    }
+
+    std::cout << "Введите ID фильма: ";
+    std::cin >> id;
+  }
+
+  std::cin.ignore();
+
+  std::cout << "Введите название фильма: ";
+  std::getline(std::cin, title);
+
+  while (title.empty())
+  {
+    std::cout << "Ошибка: название фильма не должно быть пустым.\n";
+    std::cout << "Введите название фильма: ";
+    std::getline(std::cin, title);
+  }
+
+  std::cout << "Введите продолжительность фильма (мин.): ";
+  std::cin >> duration;
+
+  while (duration <= 0)
+  {
+    std::cout << "Ошибка: продолжительность должна быть больше нуля.\n";
+    std::cout << "Введите продолжительность фильма (мин.): ";
+    std::cin >> duration;
+  }
+
+  std::cout << "Введите возрастной рейтинг: ";
+  std::cin >> ageRating;
+
+  while (ageRating < 0 || ageRating > 18)
+  {
+    std::cout << "Ошибка: возрастной рейтинг должен быть от 0 до 18.\n";
+    std::cout << "Введите возрастной рейтинг: ";
+    std::cin >> ageRating;
+  }
+
+  try
+  {
+    Movie movie(id, title, duration, ageRating);
+    cinema.addMovie(movie);
+    
+    std::cout << "Фильм успешно добавлен.\n";
+  }
+  catch (const std::invalid_argument& error)
+  {
+    std::cout << "Ошибка: " << error.what() << '\n';
+  }
+}
+
 void showAdministratorMenu(Cinema& cinema)
 {
   int choice = -1;
@@ -178,11 +247,11 @@ void showAdministratorMenu(Cinema& cinema)
     switch (choice)
     {
     case 1:
-      
+        addMovie(cinema);
       break;
 
     case 2:
-
+      cinema.displayMovies();
       break;
 
     case 3:
@@ -219,7 +288,7 @@ void showUserMenu(Cinema& cinema)
     switch (choice)
     {
     case 1:
-      
+       cinema.displayMovies();
       break;
     
     case 2:
