@@ -134,6 +134,35 @@ public:
     movieCount++;
   }
 
+  void removeMovie(int id)
+  {
+    int index = -1;
+
+    for (int i = 0; i < movieCount; i++)
+    {
+      if (movies[i].getId() == id)
+      {
+        index = i;
+        break;
+      }
+    }
+    
+    if (index == -1)
+    {
+      std::cout << "Фильм с таким ID не найден.\n";
+      return;
+    }
+    
+    for (int i = index; i < movieCount - 1; i++)
+    {
+      movies[i] = movies[i + 1];
+    }
+    
+    movieCount--;
+
+    std::cout << "Фильм успешно удалён.\n";
+  }
+
   void displayMovies() const
   {
     if (movieCount == 0)
@@ -255,9 +284,13 @@ void showAdministratorMenu(Cinema& cinema)
       break;
 
     case 3:
+    {
+      std::cout << "Введите ID фильма для удаления: ";
+      int id = inputMovieId();
 
+      cinema.removeMovie(id);
       break;
-
+    }
     case 0:
       std::cout << "Назад.\n";
       break;
@@ -292,7 +325,19 @@ void showUserMenu(Cinema& cinema)
       break;
     
     case 2:
+    {
+      std::cout << "Введите ID фильма: ";
+      int id = inputMovieId();
+      Movie* movie = cinema.findMovie(id);
 
+      if (movie != nullptr)
+      {
+        movie->display();
+      }else
+      {
+        std::cout << "Фильм с таким ID не найден.\n";
+      }
+    }
       break;
     
     case 0:
