@@ -188,6 +188,82 @@ public:
   }
 };
 
+class Session
+{
+private:
+  int id;
+  int movieId;
+  std::string startTime;
+  int totalSeats;
+  int availableSeats;
+public:
+  Session() : id(0), movieId(0), startTime("Неизвестно"), totalSeats(0), availableSeats(0)
+  {}
+
+  Session(int id, int movieId, const std::string& startTime, int totalSeats, int availableSeats)
+        : id(id), movieId(movieId), startTime(startTime), totalSeats(totalSeats), availableSeats(availableSeats)
+  {
+    if (id <= 0)
+    {
+      throw std::invalid_argument("ID сеанса должен быть больше нуля");
+    }
+
+    if (movieId <= 0)
+    {
+      throw std::invalid_argument("ID фильма должен быть больше нуля");
+    }
+
+    if (startTime.empty())
+    {
+      throw std::invalid_argument("Время начала сеанса не должно быть пустым");
+    }
+
+     if (totalSeats <= 0)
+      {
+        throw std::invalid_argument("Количество мест должно быть больше нуля");  
+      }
+      
+      if (availableSeats < 0 || availableSeats > totalSeats)
+      {
+        throw std::invalid_argument("Некорректное количество свободных мест");
+      }  
+  }
+
+  int getId() const
+  {
+    return id;
+  }
+
+  int getMovieId() const
+  {
+    return movieId;
+  }
+
+  const std::string& getStartTime() const
+  {
+    return startTime;
+  }
+
+  int getTotalSeats() const
+  {
+    return totalSeats;
+  }
+
+  int getAvailableSeats() const
+  {
+    return availableSeats;
+  }
+
+  void display() const
+  {
+    std::cout << "ID сеанса: " << id << '\n'
+              << "ID фильма: " << movieId << '\n'
+              << "Время начала: " << startTime << '\n'
+              << "Всего мест: " << totalSeats << '\n'
+              << "Свободных мест: " << availableSeats << '\n';
+  }
+};
+
 void addMovie(Cinema& cinema)
 {
   int id;
